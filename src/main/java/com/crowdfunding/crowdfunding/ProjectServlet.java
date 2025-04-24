@@ -25,7 +25,7 @@ public class ProjectServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
     List<Project> projectList = null;
     try {
-      projectList = repository.getAllProjects();
+      projectList = repository.getProjectsPerApprobationStatus(true);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }

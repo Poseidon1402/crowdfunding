@@ -12,14 +12,15 @@ import java.util.List;
 public class ProjectRepository {
   public ProjectRepository() {}
 
-  public List<Project> getAllProjects() throws Exception {
+  public List<Project> getProjectsPerApprobationStatus(boolean isApproved) throws Exception {
     List<Project> projects = new ArrayList<>();
 
-    String SELECT_APPROVED_PROJECTS = "SELECT * FROM project WHERE Is_approved=true";
+    String SELECT_APPROVED_PROJECTS = "SELECT * FROM project WHERE Is_approved=?";
 
     final Connection connection = DatabaseConnector.connect();
 
     PreparedStatement preparedStatement = connection.prepareStatement(SELECT_APPROVED_PROJECTS);
+    preparedStatement.setBoolean(1, isApproved);
 
       ResultSet rs = preparedStatement.executeQuery();
 
