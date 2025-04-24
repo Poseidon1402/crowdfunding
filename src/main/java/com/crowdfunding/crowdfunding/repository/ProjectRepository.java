@@ -23,7 +23,7 @@ public class ProjectRepository {
 
       ResultSet rs = preparedStatement.executeQuery();
 
-      while (((java.sql.ResultSet) rs).next()) {
+      while (rs.next()) {
         Project project = new Project(
           rs.getInt("ID2"),
           rs.getInt("UserID2"),

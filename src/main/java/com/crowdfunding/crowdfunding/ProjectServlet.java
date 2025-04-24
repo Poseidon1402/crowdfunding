@@ -2,7 +2,6 @@ package com.crowdfunding.crowdfunding;
 
 import com.crowdfunding.crowdfunding.dao.Project;
 import com.crowdfunding.crowdfunding.repository.ProjectRepository;
-import com.crowdfunding.crowdfunding.utils.DatabaseConnector;
 
 import java.io.*;
 import java.util.List;
@@ -19,7 +18,7 @@ public class ProjectServlet extends HttpServlet {
   private ProjectRepository repository;
 
   @Override
-  public void init() throws ServletException {
+  public void init() {
     repository = new ProjectRepository();
   }
 

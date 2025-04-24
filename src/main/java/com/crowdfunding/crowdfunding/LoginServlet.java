@@ -1,7 +1,5 @@
 package com.crowdfunding.crowdfunding;
 
-import com.crowdfunding.crowdfunding.utils.DatabaseConnector;
-
 import java.io.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;

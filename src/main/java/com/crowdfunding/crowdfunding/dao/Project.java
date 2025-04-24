@@ -24,7 +24,6 @@ public class Project {
   }
 
   // Getters...
-  public int getId() { return id; }
   public int getUserId() { return userId; }
   public String getName() { return name; }
   public Date getDeadline() { return deadline; }
