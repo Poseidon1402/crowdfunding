@@ -15,11 +15,11 @@ public class ProjectRepository {
   public List<Project> getAllProjects() throws Exception {
     List<Project> projects = new ArrayList<>();
 
-    String SELECT_ALL_PROJECTS = "SELECT * FROM project";
+    String SELECT_APPROVED_PROJECTS = "SELECT * FROM project WHERE Is_approved=true";
 
     final Connection connection = DatabaseConnector.connect();
 
-    PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_PROJECTS);
+    PreparedStatement preparedStatement = connection.prepareStatement(SELECT_APPROVED_PROJECTS);
 
       ResultSet rs = preparedStatement.executeQuery();
 
