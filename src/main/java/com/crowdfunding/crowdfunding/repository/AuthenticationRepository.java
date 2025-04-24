@@ -1,0 +1,34 @@
+package com.crowdfunding.crowdfunding.repository;
+
+import com.crowdfunding.crowdfunding.dao.User;
+import com.crowdfunding.crowdfunding.utils.DatabaseConnector;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+public class AuthenticationRepository {
+  public AuthenticationRepository() {}
+
+  public User findByEmail(String email) throws Exception {
+    try {
+      String GET_USER_FROM_EMAIL_QUERY = "SELECT * FROM users WHERE email = ?";
+
+      final Connection connection = DatabaseConnector.connect();
+
+      PreparedStatement stmt = connection.prepareStatement(GET_USER_FROM_EMAIL_QUERY);
+      stmt.setString(1, email);
+      ResultSet rs = stmt.executeQuery();
+
+      if (rs.next()) {
+        User user = new User();
+        user.setEmail(rs.getString("email"));
+        user.setPassword(rs.getString("password")); // hashed
+        return user;
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+}
