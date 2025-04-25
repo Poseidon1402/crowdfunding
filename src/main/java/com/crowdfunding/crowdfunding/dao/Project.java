@@ -10,6 +10,7 @@ public class Project {
   private final int moneyNeeded;
   private final int moneyPerContributor;
   private final String status;
+  private int contributions;
 
   // Constructor
   public Project(int id, int userId, String name, Date deadline, boolean isApproved, int moneyNeeded, int moneyPerContributor, String status) {
@@ -21,6 +22,7 @@ public class Project {
     this.moneyNeeded = moneyNeeded;
     this.moneyPerContributor = moneyPerContributor;
     this.status = status;
+    this.contributions = 0;
   }
 
   // Getters...
@@ -31,6 +33,9 @@ public class Project {
   public boolean isApproved() { return isApproved; }
   public int getMoneyNeeded() { return moneyNeeded; }
   public int getMoneyPerContributor() { return moneyPerContributor; }
+  public int getContributions() { return contributions; }
   public String getStatus() { return status; }
+
+  public void setContributions(int contributions) { this.contributions = contributions; }
 }
 

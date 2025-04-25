@@ -29,6 +29,13 @@
         for (Project p : projects) {
     %>
     <div class="card">
+        <%
+            int totalNeeded = p.getMoneyNeeded();
+            int perContributor = p.getMoneyPerContributor();
+            int currentContributions = p.getContributions(); // you already have this attribute
+            int totalRequired = (perContributor != 0) ? totalNeeded / perContributor : 1;
+            int progress = (int) (((double) currentContributions / totalRequired) * 100);
+        %>
         <h3><%= p.getName() %></h3>
         <div class="info"><strong>User ID:</strong> <%= p.getUserId() %></div>
         <div class="info"><strong>Deadline:</strong> <%= p.getDeadline() %></div>
@@ -38,6 +45,11 @@
         <div class="badge <%= p.isApproved() ? "approved" : "rejected" %>">
             <%= p.isApproved() ? "Approved" : "Pending" %>
         </div>
+
+        <div class="progress-container">
+            <div class="progress-bar" style="width: <%= progress %>%;"></div>
+        </div>
+        <p><%= currentContributions %> / <%= totalRequired %> contributions</p>
 
         <% if (p.isApproved() && userId != -1) { %>
         <%

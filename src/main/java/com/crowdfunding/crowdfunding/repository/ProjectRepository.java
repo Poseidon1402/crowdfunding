@@ -15,6 +15,7 @@ public class ProjectRepository {
 
   public List<Project> getProjectsPerApprobationStatus(boolean isApproved) throws Exception {
     List<Project> projects = new ArrayList<>();
+    ContributeRepository contributeRepository = new ContributeRepository();
 
     String SELECT_APPROVED_PROJECTS = "SELECT * FROM project WHERE Is_approved=?";
     final Connection connection = DatabaseConnector.connect();
@@ -35,6 +36,7 @@ public class ProjectRepository {
         rs.getInt("Money_needed_per_contributor"),
         rs.getString("Status")
       );
+      project.setContributions(contributeRepository.getContributionCountByProjectId(project.getId()));
       projects.add(project);
     }
 
