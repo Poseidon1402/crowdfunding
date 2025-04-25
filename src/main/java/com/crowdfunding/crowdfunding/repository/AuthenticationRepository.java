@@ -12,7 +12,7 @@ public class AuthenticationRepository {
 
   public User findByEmail(String email) throws Exception {
     try {
-      String GET_USER_FROM_EMAIL_QUERY = "SELECT * FROM users WHERE email = ?";
+      String GET_USER_FROM_EMAIL_QUERY = "SELECT * FROM user WHERE Email = ?";
 
       final Connection connection = DatabaseConnector.connect();
 
@@ -23,7 +23,8 @@ public class AuthenticationRepository {
       if (rs.next()) {
         User user = new User();
         user.setEmail(rs.getString("email"));
-        user.setPassword(rs.getString("password")); // hashed
+        user.setPassword(rs.getString("password"));
+        user.setRole(rs.getString("role"));
         return user;
       }
     } catch (Exception e) {

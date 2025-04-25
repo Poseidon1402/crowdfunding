@@ -1,13 +1,20 @@
 package com.crowdfunding.crowdfunding.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
 
   private int id;
   private String username;
   private String email;
-  private String password; // hashed password
+  private String password;
+  private String role; // New field for role (e.g. "admin", "user", etc.)
+  private final List<Integer> contributions;
 
-  public User() {}
+  public User() {
+    contributions = new ArrayList<Integer>();
+  }
 
   // Getters and Setters
   public int getId() {
@@ -40,5 +47,21 @@ public class User {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public String getRole() {
+    return role;
+  }
+
+  public void setRole(String role) {
+    this.role = role;
+  }
+
+  public List<Integer> getContributions() {
+    return contributions;
+  }
+
+  public void addContribution(int contribution) {
+    contributions.add(contribution);
   }
 }

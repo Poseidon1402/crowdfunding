@@ -5,6 +5,7 @@ import com.crowdfunding.crowdfunding.dao.User;
 import com.crowdfunding.crowdfunding.repository.AuthenticationRepository;
 
 import java.io.*;
+import java.util.Objects;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -31,12 +32,17 @@ public class LoginServlet extends HttpServlet {
             final User user = repository.findByEmail(email);
 
             if(user != null) {
-                final BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword());
+                final BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword().toCharArray());
 
                 if(result.verified) {
                     HttpSession session = request.getSession();
                     session.setAttribute("user", user);
-                    request.getRequestDispatcher("/project-list.jsp").forward(request, response);
+
+                    if(Objects.equals(user.getRole(), "user")) {
+                        response.sendRedirect(request.getContextPath() + "/projects");
+                    } else {
+                        response.sendRedirect(request.getContextPath() + "/dashboard");
+                    }
                 } else {
                     request.setAttribute("error", "Invalid email or password");
                     request.getRequestDispatcher("/login_page.jsp").forward(request, response);
