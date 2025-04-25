@@ -32,6 +32,14 @@
         <div class="badge <%= p.isApproved() ? "approved" : "rejected" %>">
             <%= p.isApproved() ? "Approved" : "Pending" %>
         </div>
+
+        <% if (p.isApproved()) { %>
+        <form action="contribute" method="post" style="margin-top: 10px;">
+            <input type="hidden" name="projectId" value="<%= p.getId() %>">
+            <input type="hidden" name="userId" value="1"> <%-- Replace with session user ID later --%>
+            <button type="submit">Contribute $<%= p.getMoneyPerContributor() %></button>
+        </form>
+        <% } %>
     </div>
     <% } %>
 </div>
