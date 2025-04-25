@@ -15,7 +15,7 @@ public class LoginServlet extends HttpServlet {
     private AuthenticationRepository repository;
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         repository = new AuthenticationRepository();
     }
 

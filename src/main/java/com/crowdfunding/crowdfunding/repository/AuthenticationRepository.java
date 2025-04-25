@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 public class AuthenticationRepository {
   public AuthenticationRepository() {}
 
-  public User findByEmail(String email) throws Exception {
+  public User findByEmail(String email) {
     try {
       String GET_USER_FROM_EMAIL_QUERY = "SELECT * FROM user WHERE Email = ?";
 
@@ -22,6 +22,7 @@ public class AuthenticationRepository {
 
       if (rs.next()) {
         User user = new User();
+        user.setId(rs.getInt("user_id"));
         user.setEmail(rs.getString("email"));
         user.setPassword(rs.getString("password"));
         user.setRole(rs.getString("role"));

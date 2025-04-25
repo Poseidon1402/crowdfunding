@@ -8,12 +8,18 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.crowdfunding.crowdfunding.dao.Project" %>
+<%@ page import="com.crowdfunding.crowdfunding.dao.User" %>
 <html>
 <head>
     <title>All Projects</title>
     <link rel="stylesheet" href="css/projects-list.css" />
 </head>
 <body>
+
+<%
+    User currentUser = (User) session.getAttribute("user");
+    int userId = currentUser != null ? currentUser.getId() : -1;
+%>
 
 <h2>All Projects</h2>
 
@@ -33,12 +39,24 @@
             <%= p.isApproved() ? "Approved" : "Pending" %>
         </div>
 
-        <% if (p.isApproved()) { %>
+        <% if (p.isApproved() && userId != -1) { %>
+        <%
+            boolean alreadyContributed = currentUser.getContributions().contains(p.getId());
+            if (alreadyContributed) {
+        %>
+        <p style="margin-top: 10px; color: green;"><strong>Already Contributed</strong></p>
+        <%
+        } else {
+        %>
         <form action="contribute" method="post" style="margin-top: 10px;">
             <input type="hidden" name="projectId" value="<%= p.getId() %>">
-            <input type="hidden" name="userId" value="1"> <%-- Replace with session user ID later --%>
+            <input type="hidden" name="userId" value="<%= userId %>">
             <button type="submit">Contribute $<%= p.getMoneyPerContributor() %></button>
         </form>
+        <%
+            }
+        %>
+
         <% } %>
     </div>
     <% } %>
@@ -48,4 +66,5 @@
 
 </body>
 </html>
+
 
