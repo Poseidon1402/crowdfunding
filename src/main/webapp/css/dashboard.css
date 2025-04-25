@@ -1,0 +1,15 @@
+.approve-button {
+    margin-top: 10px;
+    background-color: #38b000;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease;
+}
+
+.approve-button:hover {
+    background-color: #2a7f00;
+}

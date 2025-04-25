@@ -1,4 +1,4 @@
-package com.crowdfunding.crowdfunding;
+package com.crowdfunding.crowdfunding.servlet;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.crowdfunding.crowdfunding.dao.User;
@@ -23,7 +23,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 

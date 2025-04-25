@@ -1,9 +1,10 @@
-package com.crowdfunding.crowdfunding;
+package com.crowdfunding.crowdfunding.servlet;
 
 import com.crowdfunding.crowdfunding.dao.Project;
 import com.crowdfunding.crowdfunding.repository.ProjectRepository;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -23,7 +24,7 @@ public class ProjectServlet extends HttpServlet {
   }
 
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-    List<Project> projectList = null;
+    List<Project> projectList = new ArrayList<>();
     try {
       projectList = repository.getProjectsPerApprobationStatus(true);
     } catch (Exception e) {
