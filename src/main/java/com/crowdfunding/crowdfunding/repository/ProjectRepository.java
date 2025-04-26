@@ -23,24 +23,7 @@ public class ProjectRepository {
     PreparedStatement preparedStatement = connection.prepareStatement(SELECT_APPROVED_PROJECTS);
     preparedStatement.setBoolean(1, isApproved);
 
-    ResultSet rs = preparedStatement.executeQuery();
-
-    while (rs.next()) {
-      Project project = new Project(
-        rs.getInt("ID2"),
-        rs.getInt("UserID2"),
-        rs.getString("Project_name"),
-        rs.getDate("Deadline"),
-        rs.getBoolean("Is_approved"),
-        rs.getInt("Money_needed"),
-        rs.getInt("Money_needed_per_contributor"),
-        rs.getString("Status")
-      );
-      project.setContributions(contributeRepository.getContributionCountByProjectId(project.getId()));
-      projects.add(project);
-    }
-
-    return projects;
+    return getProjects(projects, contributeRepository, preparedStatement);
   }
 
   // ✅ Approve project by setting Is_approved = true
@@ -79,4 +62,39 @@ public class ProjectRepository {
 
     statement.executeUpdate();
   }
+
+  public List<Project> getProjectsByUserId(int userId) throws Exception {
+    List<Project> projects = new ArrayList<>();
+    ContributeRepository contributeRepository = new ContributeRepository();
+
+    String SELECT_PROJECTS_BY_USER = "SELECT * FROM project WHERE UserID2 = ?";
+    Connection connection = DatabaseConnector.connect();
+
+    PreparedStatement statement = connection.prepareStatement(SELECT_PROJECTS_BY_USER);
+      statement.setInt(1, userId);
+
+    return getProjects(projects, contributeRepository, statement);
+  }
+
+  private List<Project> getProjects(List<Project> projects, ContributeRepository contributeRepository, PreparedStatement statement) throws Exception {
+    ResultSet rs = statement.executeQuery();
+
+    while (rs.next()) {
+      Project project = new Project(
+        rs.getInt("ID2"),
+        rs.getInt("UserID2"),
+        rs.getString("Project_name"),
+        rs.getDate("Deadline"),
+        rs.getBoolean("Is_approved"),
+        rs.getInt("Money_needed"),
+        rs.getInt("Money_needed_per_contributor"),
+        rs.getString("Status")
+      );
+      project.setContributions(contributeRepository.getContributionCountByProjectId(project.getId()));
+      projects.add(project);
+    }
+
+    return projects;
+  }
 }
+

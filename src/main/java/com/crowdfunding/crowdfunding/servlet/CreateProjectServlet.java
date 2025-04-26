@@ -1,6 +1,7 @@
 package com.crowdfunding.crowdfunding.servlet;
 
 import com.crowdfunding.crowdfunding.dao.Project;
+import com.crowdfunding.crowdfunding.repository.ProjectRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -48,8 +49,8 @@ public class CreateProjectServlet extends HttpServlet {
         status
       );
 
-      com.crowdfunding.crowdfunding.repository.ProjectRepository repo = new com.crowdfunding.crowdfunding.repository.ProjectRepository();
-      repo.addProject(newProject);
+      ProjectRepository repository = new com.crowdfunding.crowdfunding.repository.ProjectRepository();
+      repository.addProject(newProject);
 
       request.setAttribute("success", "Project added successfully.");
       this.getServletContext().getRequestDispatcher("/add-project.jsp").forward(request, resp);
