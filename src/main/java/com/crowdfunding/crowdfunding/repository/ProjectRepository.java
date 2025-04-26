@@ -62,4 +62,21 @@ public class ProjectRepository {
       statement.executeUpdate();
     }
   }
+
+  public void addProject(Project project) throws Exception {
+    String INSERT_PROJECT = "INSERT INTO project (UserID2, Project_name, Deadline, Is_approved, Money_needed, Money_needed_per_contributor, Status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    Connection connection = DatabaseConnector.connect();
+
+    PreparedStatement statement = connection.prepareStatement(INSERT_PROJECT);
+
+    statement.setInt(1, project.getUserId());
+    statement.setString(2, project.getName());
+    statement.setDate(3, new java.sql.Date(project.getDeadline().getTime()));
+    statement.setBoolean(4, project.isApproved());
+    statement.setInt(5, project.getMoneyNeeded());
+    statement.setInt(6, project.getMoneyPerContributor());
+    statement.setString(7, project.getStatus());
+
+    statement.executeUpdate();
+  }
 }

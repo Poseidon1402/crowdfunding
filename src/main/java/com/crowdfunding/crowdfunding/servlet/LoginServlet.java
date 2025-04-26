@@ -40,7 +40,10 @@ public class LoginServlet extends HttpServlet {
 
                     if(Objects.equals(user.getRole(), "user")) {
                         response.sendRedirect(request.getContextPath() + "/projects");
-                    } else {
+                    } else if(Objects.equals(user.getRole(), "promoter")) {
+                        response.sendRedirect(request.getContextPath() + "/add-project");
+                    }
+                    else {
                         response.sendRedirect(request.getContextPath() + "/dashboard");
                     }
                 } else {
