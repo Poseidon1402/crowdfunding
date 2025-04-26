@@ -1,6 +1,7 @@
 package com.crowdfunding.crowdfunding.servlet;
 
 import com.crowdfunding.crowdfunding.dao.Project;
+import com.crowdfunding.crowdfunding.dao.User;
 import com.crowdfunding.crowdfunding.repository.ProjectRepository;
 
 import javax.servlet.ServletException;
@@ -15,16 +16,13 @@ public class CreateProjectServlet extends HttpServlet {
 
   public void init() {}
 
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-    this.getServletContext().getRequestDispatcher("/add-project.jsp").forward(request, response);
-  }
-
   @Override
-  protected void doPost(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
+  protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     request.setCharacterEncoding("UTF-8");
 
     try {
-      int userId = Integer.parseInt(request.getParameter("userId"));
+      User currentUser = (User) request.getSession().getAttribute("user");
+      int userId = currentUser.getId();
       String name = request.getParameter("name");
       String deadlineStr = request.getParameter("deadline");
       int moneyNeeded = Integer.parseInt(request.getParameter("moneyNeeded"));
@@ -49,16 +47,16 @@ public class CreateProjectServlet extends HttpServlet {
         status
       );
 
-      ProjectRepository repository = new com.crowdfunding.crowdfunding.repository.ProjectRepository();
+      ProjectRepository repository = new ProjectRepository();
       repository.addProject(newProject);
 
       request.setAttribute("success", "Project added successfully.");
-      this.getServletContext().getRequestDispatcher("/add-project.jsp").forward(request, resp);
+      response.sendRedirect(request.getContextPath() + "/my-projects");
 
     } catch (Exception e) {
       e.printStackTrace();
       request.setAttribute("error", "Error while creating project: " + e.getMessage());
-      this.getServletContext().getRequestDispatcher("/add-project.jsp").forward(request, resp);
+      this.getServletContext().getRequestDispatcher("/add-project.jsp").forward(request, response);
     }
   }
 

@@ -11,41 +11,70 @@
   List<Project> userProjects = (List<Project>) request.getAttribute("userProjects");
 %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My Projects</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <title>Dashboard - My Projects</title>
+  <link rel="stylesheet" href="css/my-project.css">
 </head>
-<body class="bg-light">
-
-<div class="container py-5">
-  <h2 class="mb-4 text-center">My Projects</h2>
-
-  <% if (userProjects == null || userProjects.isEmpty()) { %>
-  <div class="alert alert-info text-center">You haven't created any projects yet.</div>
-  <% } else { %>
+<body>
+<div class="container">
+  <h2>My Dashboard</h2>
   <div class="row">
-    <% for (Project project : userProjects) { %>
-    <div class="col-md-6 mb-4">
-      <div class="card shadow rounded-4">
-        <div class="card-body">
-          <h5 class="card-title"><%= project.getName() %></h5>
-          <p class="card-text">
-            Deadline: <%= project.getDeadline() %><br>
-            Money Needed: $<%= project.getMoneyNeeded() %><br>
-            Per Contributor: $<%= project.getMoneyPerContributor() %><br>
-            Approved: <%= project.isApproved() ? "Yes" : "No" %><br>
-            Status: <%= project.getStatus() %>
-          </p>
+    <!-- Project List -->
+    <div class="col-8">
+      <h4 style="margin-bottom: 20px;">My Projects</h4>
+      <% if (userProjects == null || userProjects.isEmpty()) { %>
+      <div class="alert">You haven't created any projects yet.</div>
+      <% } else { %>
+      <div class="row">
+        <% for (Project project : userProjects) { %>
+        <div style="flex: 1 1 45%; margin-bottom: 30px;">
+          <div class="card">
+            <h5 class="card-title"><%= project.getName() %></h5>
+            <ul class="list-unstyled">
+              <li><strong>Deadline:</strong> <%= project.getDeadline() %></li>
+              <li><strong>Money Needed:</strong> $<%= project.getMoneyNeeded() %></li>
+              <li><strong>Per Contributor:</strong> $<%= project.getMoneyPerContributor() %></li>
+              <li><strong>Approved:</strong> <%= project.isApproved() ? "Yes" : "No" %></li>
+              <li><strong>Status:</strong> <%= project.getStatus() %></li>
+            </ul>
+          </div>
         </div>
+        <% } %>
+      </div>
+      <% } %>
+    </div>
+
+    <!-- Add New Project -->
+    <div class="col-4">
+      <div class="card">
+        <h5 class="card-title">Add New Project</h5>
+        <form action="add-project" method="post">
+          <div class="form-group">
+            <label for="name">Project Name</label>
+            <input type="text" id="name" name="name" required />
+          </div>
+          <div class="form-group">
+            <label for="deadline">Deadline</label>
+            <input type="date" id="deadline" name="deadline" required />
+          </div>
+          <div class="form-group">
+            <label for="moneyNeeded">Money Needed</label>
+            <input type="number" id="moneyNeeded" name="moneyNeeded" required />
+          </div>
+          <div class="form-group">
+            <label for="moneyPerContributor">Money Per Contributor</label>
+            <input type="number" id="moneyPerContributor" name="moneyPerContributor" required />
+          </div>
+          <button type="submit">Create Project</button>
+        </form>
       </div>
     </div>
-    <% } %>
   </div>
-  <% } %>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+
 
